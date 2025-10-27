@@ -15,7 +15,7 @@ This package provides 2 functions: `fix-indent` and `newpar`.
 
 ## Rules of indentation
 
-For every block level elements (defaults are equations, enums, lists, and figures), the paragraph will remains as if it is the same paragraph when it is not followed by `parbreak()`.
+For every block level elements (defaults are equations, enums, lists, and figures), the paragraph will remains as if it is the same paragraph when it is not followed by `parbreak()` (consecutive newlines).
 
 ```typ
 #show: fix-indent
