@@ -36,7 +36,6 @@ $
 #lorem(10) // indented
 + A3
 + B3
-
 #lorem(10) // no indent + less spacing
 
 #figure([FIG ONE], caption: [This is figure 1.])
