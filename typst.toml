@@ -1,0 +1,10 @@
+[package]
+name = "inlinum"
+version = "0.1.0"
+entrypoint = "export.typ"
+authors = ["pacaunt <@pacaunt>"]
+license = "MIT"
+compiler = "0.13.1"
+repository = "https://github.com/pacaunt/inlinum"
+description = "Convenient paragraph indentation"
+categories = ["utility"]
