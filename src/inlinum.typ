@@ -3,20 +3,26 @@
 #let _sequence = [].func()
 
 // Fix the paragraph by being the first paragraph.
-#let newpar = context {
-  let indent = par.first-line-indent
-  if type(indent) == dictionary {
-    if indent.all {
-      h(indent.amount)
-    } else {
-      h(-indent.amount)
-    }
-  } else {
-    h(-indent)
-  }
-}
+#let newpar = metadata(_prefix + "_start-par")
+#let protect(seq) = [#seq#_label]
 
 #let fix-indent(doc, fix: ()) = {
+  show metadata: it => {
+    if it.value == newpar.value {
+      let indent = par.first-line-indent
+      if type(indent) == dictionary {
+        if indent.all {
+          h(indent.amount)
+        } else {
+          h(-indent.amount)
+        }
+      } else {
+        h(-indent)
+      }
+    } else {
+      it
+    }
+  }
   show _sequence: seq => {
     let item-family = (enum.item, list.item, terms.item)
     let block-family = (enum, list, terms, figure) + fix
@@ -70,8 +76,8 @@
               func(c) in item-family and func(peek(i + 2)) not in item-family
             }
             or {
-              func(c) in block-family
-            } 
+              func(c) in block-family 
+            }
             or {
               c == newpar
             }
@@ -83,9 +89,7 @@
         }
 
         if func(c) in item-family {
-          if func(peek(i + 2)) not in item-family {
-            last-item = true
-          } else {
+          if func(peek(i + 2)) in item-family {
             item += 1
           }
         }
@@ -98,24 +102,18 @@
 
         // We will reach this only when the items are ended.
         if check {
-
-          if (
-            peek(i + 1) != parbreak()  
-              and peek(i + 1) != newpar
-              and peek(i + 2) != newpar
-          ) {
-            // remove the `par.spacing` when the list is tight.
+          if peek(i + 1) == parbreak() {
+            i += 1
+            result.push(parred)
+          } else if peek(i + 1) == newpar or peek(i + 2) == newpar {
+            // Do nothing
+          } else  {
             if func(c) in item-family and item-tight {
               result.push(eat-spacing)
             }
             result.push(unpar)
-          } else {
-            // skip the `parbreak()`
-            i += 1
-            result.push(parred)
           }
 
-          
           // reset the items
           item = 0
           last-item = false

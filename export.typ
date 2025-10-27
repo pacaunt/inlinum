@@ -1,1 +1,1 @@
-#import "src/inlinum.typ": fix-indent, newpar
+#import "src/inlinum.typ": fix-indent, newpar, protect
