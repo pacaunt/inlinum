@@ -6,7 +6,7 @@
 #show: fix-indent
 
 #set par(
-  first-line-indent: 2em
+  first-line-indent: (amount: 2em, all: false)
 )
 
 Hello
@@ -33,8 +33,13 @@ $
 #lorem(10) // no indent + less spacing
 
 #figure([FIG ONE], caption: [This is figure 1.])
-#lorem(20) // no indent 
+#lorem(10) // no indent 
 
 #figure([FIG TWO], caption: [This is figure 2.])
 
-#lorem(20) // indented
+#lorem(10) // indented
+
+$ e + f $
+
+#newpar
+#lorem(10) // No indented, like first paragraph.

@@ -71,6 +71,9 @@
             }
             or {
               func(c) in block-family
+            } 
+            or {
+              c == newpar
             }
         )
 
@@ -95,7 +98,12 @@
 
         // We will reach this only when the items are ended.
         if check {
-          if peek(i + 1) != parbreak() {
+
+          if (
+            peek(i + 1) != parbreak()  
+              and peek(i + 1) != newpar
+              and peek(i + 2) != newpar
+          ) {
             // remove the `par.spacing` when the list is tight.
             if func(c) in item-family and item-tight {
               result.push(eat-spacing)
@@ -106,6 +114,8 @@
             i += 1
             result.push(parred)
           }
+
+          
           // reset the items
           item = 0
           last-item = false
