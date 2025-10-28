@@ -1,12 +1,38 @@
 #import "@local/inlinum:0.1.0": fix-indent, newpar
 
+#let the-label = <par-fix>
+
+#let pstate = state("par-fix", false)
+
+#show parbreak: p => {
+  place(pstate.update(false))
+}
+
+#show selector.or(figure, math.equation.where(block: true), enum, terms, list): it => {
+  it
+  place(pstate.update(true))
+} 
+
+#show par: p => context {
+  let body = p.body 
+  if p.has("label") and p.label == the-label {
+    p
+  } else {
+    context if pstate.get() {  
+      [#par(body + pstate.update(false), first-line-indent: 0pt)#the-label]
+    } else {
+      p
+    }
+  }
+}
 
 
 // #set par(first-line-indent: )
-#show: fix-indent
+// #show: fix-indent
+
 // #show math.equation.where(block: true): block.with(stroke: red)
 #set par(
-  first-line-indent: (amount: 2em, all: false),
+  first-line-indent: (amount: 2em, all: true),
 )
 // #show parbreak: box(width: 10pt, height: 10pt, fill: red)
 Hello
@@ -78,3 +104,4 @@ $
 $
   b
 $
+
