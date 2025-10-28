@@ -6,7 +6,7 @@
 #show: fix-indent
 // #show math.equation.where(block: true): block.with(stroke: red)
 #set par(
-  first-line-indent: (amount: 2em, all: false),
+  first-line-indent: (amount: 2em, all:true),
 )
 // #show parbreak: box(width: 10pt, height: 10pt, fill: red)
 Hello
@@ -66,6 +66,7 @@ $
 $
   b^2
 $
+
 #lorem(20)
 $
   a^2
@@ -78,3 +79,104 @@ $
 $
   b
 $
+$
+  markrect(outset: #.5em, (pdv(G, T))_T)
+$
+#lorem(20)
+$
+  b^2
+$
+
+#lorem(20)
+$
+  a^2
+$
+w#lorem(20)
+
+$
+  a
+$
+
+$
+  markrect(outset: #.5em, (pdv(G, T))_T)
+$
+#lorem(20)
+$
+  b^2
+$
+
+#lorem(20)
+$
+  a^2
+$
+w#lorem(20)
+
+$
+  a
+$
+$
+  markrect(outset: #.5em, (pdv(G, T))_T)
+$
+#lorem(20)
+$
+  b^2
+$
+
+#lorem(20)
+$
+  a^2
+$
+w#lorem(20)
+
+$
+  a
+$
+
+$
+  markrect(outset: #.5em, (pdv(G, T))_T)
+$
+#lorem(20)
+$
+  b^2
+$
+
+#lorem(20)
+$
+  a^2
+$
+w#lorem(20)
+
+$
+  a
+$
+
+
+/ A: #lorem(10)
+  $ a^2 $
+/ B: #lorem(10)
+  $ c^2 $
+  $ b^2 $
+/ C: #lorem(10)
+
+
+#import "@preview/gentle-clues:1.2.0" as g 
+
+#[
+  / TERM1: 1 
+
+  == Heading 
+].fields()
+
+#{
+  //g.example[].func()  == g.example
+  g.example
+}
+/ TERM1: 1 
+
+
+#[
+  + HELLO 
+  #g.example[]
+].fields()
+
+== Heading 
