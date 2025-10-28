@@ -1,26 +1,36 @@
 #let _prefix = "_inlinum:0.1.0"
 #let _label = label(_prefix + "_processed")
 #let _sequence = [].func()
+#let _state = state(_prefix + "_par-state", false)
 
 // Fix the paragraph by being the first paragraph.
-#let newpar = metadata(_prefix + "_start-par")
+#let newpar = metadata(_prefix + "_start-par",)
 #let protect(seq) = [#seq#_label]
 
 #let fix-indent(doc, fix: ()) = {
   show metadata: it => {
     if it.value == newpar.value {
-      let indent = par.first-line-indent
-      if type(indent) == dictionary {
-        if indent.all {
-          h(indent.amount)
-        } else {
-          h(-indent.amount)
-        }
-      } else {
-        h(-indent)
-      }
+      _state.update(false)
     } else {
       it
+    }
+  }
+  show par: p => {
+    let parindent = par.first-line-indent
+    if p.has("label") and p.label == _label {
+      p
+    } else {
+      let fix-amount = 0pt 
+      let (fix, unfix) = if parindent.all {
+        (0pt, parindent)
+      } else {
+        (0pt, (amount: parindent.amount, all: true))
+      }
+      context if _state.get() {
+        [#par(p.body, first-line-indent: fix)#_label]
+      } else {
+        [#par(p.body, first-line-indent: unfix)#_label]
+      }
     }
   }
   show _sequence: seq => {
@@ -38,18 +48,7 @@
     }
 
     // Modification to the text
-    let (unpar, parred) = {
-      let indent = par.first-line-indent
-      if type(indent) == dictionary {
-        if indent.all {
-          (h(-indent.amount), none)
-        } else {
-          (none, h(indent.amount))
-        }
-      } else {
-        (none, h(indent))
-      }
-    }
+    let (unpar, parred) = (_state.update(true), _state.update(false))
 
     let check = false
     let result = ()

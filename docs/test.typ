@@ -6,7 +6,7 @@
 #show: fix-indent
 // #show math.equation.where(block: true): block.with(stroke: red)
 #set par(
-  first-line-indent: (amount: 2em, all: true),
+  first-line-indent: (amount: 2em, all: false),
 )
 // #show parbreak: box(width: 10pt, height: 10pt, fill: red)
 Hello
@@ -19,6 +19,7 @@ where volume of mixture $V$ *must* be in liters (L).
 $
   y=1
 $
+
 #lorem(10) // indented
 
 $
@@ -70,3 +71,10 @@ $
   a^2
 $
 w#lorem(20)
+
+$
+  a
+$
+$
+  b
+$
