@@ -1,7 +1,7 @@
 #let _prefix = "_inlinum:0.1.0"
 #let _label = label(_prefix + "_processed")
 #let _sequence = [].func()
-#let _state = state(_prefix + "_par-state", false)
+#let _state = state(_prefix + "_par-state", none)
 
 // Fix the paragraph by being the first paragraph.
 #let newpar = metadata(_prefix + "_start-par",)
@@ -10,7 +10,7 @@
 #let fix-indent(doc, fix: ()) = {
   show metadata: it => {
     if it.value == newpar.value {
-      _state.update(false)
+      _state.update(none)
     } else {
       it
     }
@@ -24,12 +24,14 @@
       let (fix, unfix) = if parindent.all {
         (0pt, parindent)
       } else {
-        (0pt, (amount: parindent.amount, all: true))
+        (0pt,(amount: parindent.amount, all: true))
       }
-      context if _state.get() {
+      context if _state.get() == true {
         [#par(p.body, first-line-indent: fix)#_label]
-      } else {
+      } else if _state.get() == false {
         [#par(p.body, first-line-indent: unfix)#_label]
+      } else {
+        p
       }
     }
   }

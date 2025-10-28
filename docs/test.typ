@@ -25,7 +25,7 @@ $
 $
   y = 1
 $
-#lorem(10)
+#lorem(10)// no indent
 
 - A1
 - B1
