@@ -6,7 +6,7 @@
 #show: fix-indent
 // #show math.equation.where(block: true): block.with(stroke: red)
 #set par(
-  first-line-indent: (amount: 2em, all:true),
+  first-line-indent: (amount: 2em, all:false),
 )
 // #show parbreak: box(width: 10pt, height: 10pt, fill: red)
 Hello
